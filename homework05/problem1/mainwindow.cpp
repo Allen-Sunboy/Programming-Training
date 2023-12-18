@@ -21,10 +21,10 @@ MainWindow::~MainWindow()
 
 bool MainWindow::eventFilter(QObject *watched, QEvent *event)
 {
-    if(watched == ui->textEdit_1 && event->type() == QEvent::KeyPress)
+    if (watched == ui->textEdit_1 && event->type() == QEvent::KeyPress)
     {
         QKeyEvent *ke = (QKeyEvent*)event;
-        if(ke->key() == Qt::Key_Enter || ke->key() == Qt::Key_Return )
+        if (ke->key() == Qt::Key_Enter || ke->key() == Qt::Key_Return )
         {
             QString str = ui->textEdit_1->toPlainText();
             ui->textEdit_2->append(str);

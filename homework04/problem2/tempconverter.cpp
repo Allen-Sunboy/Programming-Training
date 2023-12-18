@@ -21,7 +21,7 @@ int TempConverter::getTempF()
 
 void TempConverter::setTempC(int i)
 {
-    if(tempC == i)
+    if (tempC == i)
     {
         return;
     }

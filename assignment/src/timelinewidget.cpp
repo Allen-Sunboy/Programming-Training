@@ -5,12 +5,12 @@
 timeLineWidget::timeLineWidget(int Type, QString str1, QString str2, int start, int dur, QWidget *parent):
     QWidget{parent}, type(Type), startTime(start), duration(dur)
 {
-    if(Type == 0 || Type == 1)
+    if (Type == 0 || Type == 1)
     {
         fileName = str1;
         filePath = str2;
     }
-    if(Type == 2)
+    if (Type == 2)
     {
         textName = str1;
         textContent = str2;
@@ -104,19 +104,19 @@ void timeLineWidget::setY(int yy)
 void timeLineWidget::setLabel()
 {
     QString str;
-    if(type == 0)
+    if (type == 0)
     {
         str += "[视频]";
     }
-    if(type == 1)
+    if (type == 1)
     {
         str += "[图片]";
     }
-    if(type == 2)
+    if (type == 2)
     {
         str += "[文字]";
     }
-    if(fileName != NULL)
+    if (fileName != NULL)
     {
         str += fileName;
     }

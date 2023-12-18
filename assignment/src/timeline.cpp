@@ -11,7 +11,7 @@ timeLine::timeLine(QWidget *parent)
 void timeLine::paintEvent(QPaintEvent *event)
 {
     lineList.clear();
-    for(int i = 0, k = 0; i < wholeTime; i++, k += interval)
+    for (int i = 0, k = 0; i < wholeTime; i++, k += interval)
     {
         QLine line(k, 0, k, 30);
         lineList.append(line);
@@ -20,7 +20,7 @@ void timeLine::paintEvent(QPaintEvent *event)
     QPainter painter(this);
     QTime time = QTime(0, 0, 0);
 
-    for(int i = 0, k = 0; i < lineList.size(); i++, k++)
+    for (int i = 0, k = 0; i < lineList.size(); i++, k++)
     {
         painter.drawLine(lineList[k]);
 
@@ -42,7 +42,7 @@ void timeLine::setNum(int n)
 
 void timeLine::setWholeTime(int w)
 {
-    if(w > wholeTime)
+    if (w > wholeTime)
     {
         wholeTime = w;
         resize(interval * wholeTime, 100 + num * 50);

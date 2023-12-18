@@ -102,7 +102,7 @@ MainWindow::MainWindow(QWidget *parent)
     QDir dir(tempDir);
     dir.removeRecursively();
     dir.setPath(tempDir);
-    if(dir.isEmpty())
+    if (dir.isEmpty())
     {
         dir.mkdir(tempDir);
     }
@@ -112,7 +112,7 @@ MainWindow::MainWindow(QWidget *parent)
         QListWidgetItem *item = ui->listWidgetImage->currentItem();
 
         //导入图片时也会发射该信号，需要先判断是否是这种情况，如果是，则currentItem为NULL，返回
-        if(item == NULL)
+        if (item == NULL)
         {
             return;
         }
@@ -124,9 +124,9 @@ MainWindow::MainWindow(QWidget *parent)
         QString filePath = imageList.key(previousName);
 
         QString newName = ui->listWidgetImage->currentItem()->text();
-        for(int i = 0; i < count; i++)
+        for (int i = 0; i < count; i++)
         {
-            if(ui->listWidgetImage->item(i)->text() == newName && i != currentRow)
+            if (ui->listWidgetImage->item(i)->text() == newName && i != currentRow)
             {
                 QMessageBox::information(this, "提示", "该名字已存在！");
                 item->setText(previousName);
@@ -143,7 +143,7 @@ MainWindow::MainWindow(QWidget *parent)
 
         //添加文字素材时也会发射此信号，需要先判断是否是这种情况，如果是则返回
         int column = ui->tableWidgetText->currentColumn();
-        if(column == -1)
+        if (column == -1)
         {
             return;
         }
@@ -151,11 +151,11 @@ MainWindow::MainWindow(QWidget *parent)
 
         QTableWidgetItem *item = ui->tableWidgetText->currentItem();
         //修改的是文字素材的名字
-        if(column == 0)
+        if (column == 0)
         {
             QString name = item->text();
             QString content = ui->tableWidgetText->item(row, 1)->text();
-            if(textList.key(name) != content && textList.key(name) != NULL)
+            if (textList.key(name) != content && textList.key(name) != NULL)
             {
                 QMessageBox::information(this, "提示", "该素材名字已存在！");
                 item->setText(textList[content]);
@@ -165,12 +165,12 @@ MainWindow::MainWindow(QWidget *parent)
 
         }
         //修改的是文字素材的内容
-        if(column == 1)
+        if (column == 1)
         {
             QString name = ui->tableWidgetText->item(row, 0)->text();
             QString content = item->text();
             //test
-            if(textList[content] != name && textList[content] != NULL)
+            if (textList[content] != name && textList[content] != NULL)
             {
                 QMessageBox::information(this, "提示", "该素材内容已存在！");
                 item->setText(textList.key(name));
@@ -187,7 +187,7 @@ MainWindow::MainWindow(QWidget *parent)
         QListWidgetItem *item = ui->listWidgetVideo->currentItem();
 
         //导入视频时也会发射该信号，需要先判断是否是这种情况，如果是，则currentItem为NULL，返回
-        if(item == NULL)
+        if (item == NULL)
         {
             return;
         }
@@ -199,9 +199,9 @@ MainWindow::MainWindow(QWidget *parent)
         QString filePath = videoList.key(previousName);
 
         QString newName = ui->listWidgetVideo->currentItem()->text();
-        for(int i = 0; i < count; i++)
+        for (int i = 0; i < count; i++)
         {
-            if(ui->listWidgetVideo->item(i)->text() == newName && i != currentRow)
+            if (ui->listWidgetVideo->item(i)->text() == newName && i != currentRow)
             {
                 QMessageBox::information(this, "提示", "该名字已存在！");
                 item->setText(previousName);
@@ -232,7 +232,7 @@ void MainWindow::on_actionImageDuration_triggered()
 {
     imageDurationDialog *dlg = new imageDurationDialog(this);
     dlg->showDuration(imageDuration);
-    if(dlg->exec() == QDialog::Accepted)
+    if (dlg->exec() == QDialog::Accepted)
     {
         imageDuration = dlg->getDuration();
     }
@@ -245,7 +245,7 @@ void MainWindow::on_actionTextDuration_triggered()
     textDurationDialog *dlg = new textDurationDialog(this);
     dlg->showDuration(textDuration);
 
-    if(dlg->exec() == QDialog::Accepted)
+    if (dlg->exec() == QDialog::Accepted)
     {
         textDuration = dlg->getDuration();
     }
@@ -258,29 +258,29 @@ void MainWindow::setTimeList()
     int size = timeList.size();
     ui->timeLineContent->setNum(size + 1);
     chosen.clear();
-    for(int i = 0; i < size; i++)
+    for (int i = 0; i < size; i++)
     {
         timeList[i]->setGeometry(0, 100 + i * 50, 40000, 50);
 
         //最上面的视频设置起始时间为第0秒，下一个视频开始时，上一个视频刚好结束，也就是保证视频连续
-        if(timeList[i]->getType() == 0)
+        if (timeList[i]->getType() == 0)
         {
-            if(i == 0)
+            if (i == 0)
             {
                 timeList[i]->setStart(0);
             }
             else
             {
                 int preVideo = i;
-                for(int j = i - 1; j >= 0; j--)
+                for (int j = i - 1; j >= 0; j--)
                 {
-                    if(timeList[j]->getType() == 0)
+                    if (timeList[j]->getType() == 0)
                     {
                         preVideo = j;
                         break;
                     }
                 }
-                if(preVideo == i)
+                if (preVideo == i)
                 {
                     timeList[i]->setStart(0);
                 }
@@ -297,7 +297,7 @@ void MainWindow::setTimeList()
     }
 
     int maxTime = 0;
-    for(int i = 0; i < size; i++)
+    for (int i = 0; i < size; i++)
     {
         maxTime = std::max(maxTime, timeList[i]->getStart() +timeList[i]->getDuration());
     }
@@ -312,7 +312,7 @@ void MainWindow::on_pushButtonForm_clicked()
 
 
     int size = timeList.size();
-    if(size == 0)
+    if (size == 0)
     {
         QMessageBox::information(this, "生成失败", "当前时间轴中没有视频！");
         return;
@@ -321,19 +321,19 @@ void MainWindow::on_pushButtonForm_clicked()
     QList<timeLineWidget *> imageTimeList;
     QList<timeLineWidget *> textTimeList;
 
-    for(int i = 0; i < size; i++)
+    for (int i = 0; i < size; i++)
     {
-        if(timeList[i]->getType() == 0)
+        if (timeList[i]->getType() == 0)
         {
             videoTimeList.append(timeList[i]);
             continue;
         }
-        if(timeList[i]->getType() == 1)
+        if (timeList[i]->getType() == 1)
         {
             imageTimeList.append(timeList[i]);
             continue;
         }
-        if(timeList[i]->getType() == 2)
+        if (timeList[i]->getType() == 2)
         {
             textTimeList.append(timeList[i]);
             continue;
@@ -341,7 +341,7 @@ void MainWindow::on_pushButtonForm_clicked()
     }
     int vSize = videoTimeList.size();
 
-    if(vSize == 0)
+    if (vSize == 0)
     {
         QMessageBox::information(this, "生成失败", "当前时间轴中没有视频！");
         return;
@@ -372,9 +372,9 @@ void MainWindow::on_pushButtonForm_clicked()
 
     //如果视频数大于1
 
-    if(vSize > 1)
+    if (vSize > 1)
     {
-        for(int i = 1; i < vSize; i++)
+        for (int i = 1; i < vSize; i++)
         {
             QString name1 = latestName;
             QString path1 = latestPath;
@@ -455,9 +455,9 @@ void MainWindow::on_pushButtonForm_clicked()
     //添加图片
 
     int iSize = imageTimeList.size();
-    if(iSize >= 1)
+    if (iSize >= 1)
     {
-        for(int i = 0; i < iSize; i++)
+        for (int i = 0; i < iSize; i++)
         {
             QString prePath = latestPath;
 
@@ -492,7 +492,7 @@ void MainWindow::on_pushButtonForm_clicked()
             latestPath = currentDir + "/temp/" + latestName;
 
             //无效果
-            if(imageTimeList[i]->getEffectId() == 0)
+            if (imageTimeList[i]->getEffectId() == 0)
             {
                 QString s1 = "overlay=x=";
                 s1 += xStr + ":y=" + yStr + ":enable=between(t\\," + str1 + "\\," + str2 + ")";
@@ -506,7 +506,7 @@ void MainWindow::on_pushButtonForm_clicked()
             }
 
             //淡入淡出
-            if(imageTimeList[i]->getEffectId() == 1)
+            if (imageTimeList[i]->getEffectId() == 1)
             {
                 //淡入淡出持续时间
                 QString str4;
@@ -529,7 +529,7 @@ void MainWindow::on_pushButtonForm_clicked()
             }
 
             //平移
-            if(imageTimeList[i]->getEffectId() == 2)
+            if (imageTimeList[i]->getEffectId() == 2)
             {
 
                 QString s1 = "overlay=x=";
@@ -545,7 +545,7 @@ void MainWindow::on_pushButtonForm_clicked()
             }
 
             //旋转
-            if(imageTimeList[i]->getEffectId() == 3)
+            if (imageTimeList[i]->getEffectId() == 3)
             {
                 QString s1 = "[1:v]format=rgba,rotate=PI/2*t:c=0x00000000:ow=hypot(iw\\,ih):oh=ow[out];[0:v][out]overlay=x=";
                 s1 += xStr + ":y=" + yStr + ":enable=between(t\\," + str1 + "\\," + str2 + "):shortest=1";
@@ -566,9 +566,9 @@ void MainWindow::on_pushButtonForm_clicked()
 
     //添加文字
     int tSize = textTimeList.size();
-    if(tSize >= 1)
+    if (tSize >= 1)
     {
-        for(int i = 0; i < tSize; i++)
+        for (int i = 0; i < tSize; i++)
         {
             QString prePath = latestPath;
 
@@ -616,7 +616,7 @@ void MainWindow::on_pushButtonForm_clicked()
     progress->setValue(75);
 
     //添加字幕 路径是正斜杠 用单引号引起来 用反斜杠转义
-    if(captionPath != NULL)
+    if (captionPath != NULL)
     {
         latestName = "0" + QDateTime::currentDateTime().toString("-yy-MM-dd-hh-mm-ss-zzz") + "." + finalSuffix;
         QString prePath = latestPath;
@@ -653,20 +653,20 @@ void MainWindow::mousePressEvent(QMouseEvent *event)
 {
     int mouseX = event->globalPos().x();
     int mouseY = event->globalPos().y();
-    if(timeList.empty())
+    if (timeList.empty())
     {
         return;
     }
     int size = timeList.size();
 
-    for(int i = 0; i < size; i++)
+    for (int i = 0; i < size; i++)
     {
-        if(ui->timeLineContent->mapToGlobal(timeList[i]->pos()).x() <= mouseX
+        if (ui->timeLineContent->mapToGlobal(timeList[i]->pos()).x() <= mouseX
                 && ui->timeLineContent->mapToGlobal(timeList[i]->pos()).y() <= mouseY
                 && ui->timeLineContent->mapToGlobal(timeList[i]->pos()).x() + timeList[i]->width() >= mouseX
                 && ui->timeLineContent->mapToGlobal(timeList[i]->pos()).y() + timeList[i]->height() >= mouseY)
         {
-            if(chosen[i])
+            if (chosen[i])
             {
                 timeList[i]->setLabelNotChosen();
                 chosen[i] = 0;
@@ -691,23 +691,23 @@ void MainWindow::on_actionAddImage_triggered()
     QStringList files = QFileDialog::getOpenFileNames(this, "选择图片文件", "C:\\", "图片文件 (*.png *.jpg)");
 
     //获取每个图片文件的信息并添加到list
-    for(QString &i : files)
+    for (QString &i : files)
     {
         QFileInfo fileInfo = QFileInfo(i);
         QString fileName = fileInfo.fileName();
 
         QString filePath = fileInfo.filePath();
 
-        if(imageList[filePath] != NULL)
+        if (imageList[filePath] != NULL)
         {
             QMessageBox::information(this, "提示", "该图片已存在！");
             return;
         }
 
-        if(fileName != NULL) //判断是否之前选择了某个文件
+        if (fileName != NULL) //判断是否之前选择了某个文件
         {
             //如果素材库中已存在一个名字相同但文件路径不同的图片，则将这个新加的图片的名字改为全路径
-            if(videoList.key(fileName) != NULL && videoList.key(fileName) != filePath)
+            if (videoList.key(fileName) != NULL && videoList.key(fileName) != filePath)
             {
                 fileName = filePath;
             }
@@ -732,7 +732,7 @@ void MainWindow::on_listWidgetImage_customContextMenuRequested(const QPoint &pos
     QListWidgetItem *item = ui->listWidgetImage->itemAt(pos);
 
     //判断右键时是否鼠标是在某个item上，如果不是则return
-    if(item == NULL)
+    if (item == NULL)
     {
         return;
     }
@@ -771,19 +771,19 @@ void MainWindow::on_listWidgetImage_customContextMenuRequested(const QPoint &pos
 void MainWindow::on_actionAddText_triggered()
 {
     textDialog *dlg = new textDialog(this);
-    if(dlg->exec() == QDialog::Accepted)
+    if (dlg->exec() == QDialog::Accepted)
     {
         QString name = dlg->getName();
         QString content = dlg->getContent();
 
-        if(name != NULL && content != NULL)
+        if (name != NULL && content != NULL)
         {
-            if(textList[content] != NULL)
+            if (textList[content] != NULL)
             {
                 QMessageBox::information(this, "提示", "该文字素材的内容已存在！");
                 return;
             }
-            if(textList.key(name) != NULL)
+            if (textList.key(name) != NULL)
             {
                 QMessageBox::information(this, "提示", "该文字素材的名字已存在！");
                 return;
@@ -806,7 +806,7 @@ void MainWindow::on_tableWidgetText_customContextMenuRequested(const QPoint &pos
     //获取鼠标右键时所在的item
     QTableWidgetItem *item = ui->tableWidgetText->itemAt(pos);
     //判断右键时是否鼠标是在某个item上，如果不是则return
-    if(item == NULL)
+    if (item == NULL)
     {
         return;
     }
@@ -850,21 +850,21 @@ void MainWindow::on_actionAddVideo_triggered()
     QStringList files = QFileDialog::getOpenFileNames(this, "选择视频文件", "C:\\", "视频文件 (*.mp4 *.avi *.mov)");
 
     //获取每个视频文件的信息并添加到list
-    for(QString &i : files)
+    for (QString &i : files)
     {
         QFileInfo fileInfo = QFileInfo(i);
         QString fileName = fileInfo.fileName();
         QString filePath = fileInfo.filePath();
-        if(videoList[filePath] != NULL)
+        if (videoList[filePath] != NULL)
         {
             QMessageBox::information(this, "提示", "该视频已存在！");
             return;
         }
 
-        if(fileName != NULL) //判断是否之前选择了某个文件
+        if (fileName != NULL) //判断是否之前选择了某个文件
         {
             //如果视频列表中已存在一个名字相同但文件路径不同的视频，则将这个新加的视频的名字改为全路径
-            if(videoList.key(fileName) != NULL && videoList.key(fileName) != filePath)
+            if (videoList.key(fileName) != NULL && videoList.key(fileName) != filePath)
             {
                 fileName = filePath;
             }
@@ -886,7 +886,7 @@ void MainWindow::on_listWidgetVideo_customContextMenuRequested(const QPoint &pos
     QListWidgetItem *item = ui->listWidgetVideo->itemAt(pos);
 
     //判断右键时是否鼠标是在某个item上，如果不是则return
-    if(item == NULL)
+    if (item == NULL)
     {
         return;
     }
@@ -945,7 +945,7 @@ void MainWindow::on_actionAddCaption_triggered()
     QString fileName = fileInfo.fileName();
     QString filePath = fileInfo.filePath();
 
-    if(fileName != NULL)
+    if (fileName != NULL)
     {
         captionName = fileName;
         captionPath = filePath;
@@ -957,13 +957,13 @@ void MainWindow::on_actionAddCaption_triggered()
 
 void MainWindow::on_actionExport_triggered()
 {
-    if(finalName == NULL)
+    if (finalName == NULL)
     {
         QMessageBox::information(this, "提示", "尚无任何预览视频的版本，需先生成预览视频！");
         return;
     }
     QString dirPath = QFileDialog::getSaveFileName(this, "导出视频", "C:\\", QString("视频文件 (*.mp4)"));
-    if(dirPath != NULL)
+    if (dirPath != NULL)
     {
         QFile::copy(finalPath, dirPath);
     }
@@ -999,7 +999,7 @@ void MainWindow::onSliderMoved(int value)
 
 void MainWindow::onPlayerStateChanged(QMediaPlayer::State state)
 {
-    if(state == QMediaPlayer::PlayingState)
+    if (state == QMediaPlayer::PlayingState)
     {
         ui->pushButtonStartPause->setIcon(QPixmap(":/icon/icon/pause.png"));
     }
@@ -1013,11 +1013,11 @@ void MainWindow::onPlayerStateChanged(QMediaPlayer::State state)
 //播放暂停按钮
 void MainWindow::on_pushButtonStartPause_clicked()
 {
-    if(mediaPlayer->mediaStatus() == QMediaPlayer::LoadingMedia)
+    if (mediaPlayer->mediaStatus() == QMediaPlayer::LoadingMedia)
     {
         return;
     }
-    if(mediaPlayer->state() == QMediaPlayer::PlayingState)
+    if (mediaPlayer->state() == QMediaPlayer::PlayingState)
     {
         mediaPlayer->pause();
         return;
@@ -1040,13 +1040,13 @@ void MainWindow::on_pushButtonDeleteCaption_clicked()
 
 void MainWindow::on_pushButtonDeleteObject_clicked()
 {
-    if(chosenNum == 0)
+    if (chosenNum == 0)
     {
         return;
     }
-    for(int i = timeList.size() - 1; i >= 0; i--)
+    for (int i = timeList.size() - 1; i >= 0; i--)
     {
-        if(chosen[i] == 1)
+        if (chosen[i] == 1)
         {
             timeList[i]->hide();
             timeList.removeAt(i);
@@ -1061,32 +1061,32 @@ void MainWindow::on_pushButtonDeleteObject_clicked()
 //设置时间轴对象的参数
 void MainWindow::on_pushButtonSet_clicked()
 {
-    if(chosenNum != 1)
+    if (chosenNum != 1)
     {
         return;
     }
 
     int chosenOne = -1;
-    for(int i = 0; i < timeList.size(); i++)
+    for (int i = 0; i < timeList.size(); i++)
     {
-        if(chosen[i] == 1)
+        if (chosen[i] == 1)
         {
             chosenOne = i;
             break;
         }
     }
-    if(timeList[chosenOne]->getType() == 0)
+    if (timeList[chosenOne]->getType() == 0)
     {
         return;
     }
-    if(timeList[chosenOne]->getType() == 1)
+    if (timeList[chosenOne]->getType() == 1)
     {
         imageSetDialog *dlg = new imageSetDialog(this);
         dlg->showStartEnd(timeList[chosenOne]->getStart(), timeList[chosenOne]->getDuration());
         dlg->showXY(timeList[chosenOne]->getX(), timeList[chosenOne]->getY());
 
         dlg->showEffectId(timeList[chosenOne]->getEffectId());
-        if(dlg->exec() == QDialog::Accepted)
+        if (dlg->exec() == QDialog::Accepted)
         {
             timeList[chosenOne]->setX(dlg->getX());
             timeList[chosenOne]->setY(dlg->getY());
@@ -1098,13 +1098,13 @@ void MainWindow::on_pushButtonSet_clicked()
             return;
         }
     }
-    if(timeList[chosenOne]->getType() == 2)
+    if (timeList[chosenOne]->getType() == 2)
     {
         textSetDialog *dlg = new textSetDialog(this);
         dlg->showStartEnd(timeList[chosenOne]->getStart(), timeList[chosenOne]->getDuration());
         dlg->showXY(timeList[chosenOne]->getX(), timeList[chosenOne]->getY());
 
-        if(dlg->exec() == QDialog::Accepted)
+        if (dlg->exec() == QDialog::Accepted)
         {
             timeList[chosenOne]->setX(dlg->getX());
             timeList[chosenOne]->setY(dlg->getY());
@@ -1120,20 +1120,20 @@ void MainWindow::on_pushButtonSet_clicked()
 
 void MainWindow::on_pushButtonUp_clicked()
 {
-    if(chosenNum != 1)
+    if (chosenNum != 1)
     {
         return;
     }
     int chosenOne = -1;
-    for(int i = 0; i < timeList.size(); i++)
+    for (int i = 0; i < timeList.size(); i++)
     {
-        if(chosen[i] == 1)
+        if (chosen[i] == 1)
         {
             chosenOne = i;
             break;
         }
     }
-    if(chosenOne == 0)
+    if (chosenOne == 0)
     {
         return;
     }
@@ -1145,20 +1145,20 @@ void MainWindow::on_pushButtonUp_clicked()
 
 void MainWindow::on_pushButtonDown_clicked()
 {
-    if(chosenNum != 1)
+    if (chosenNum != 1)
     {
         return;
     }
     int chosenOne = -1;
-    for(int i = 0; i < timeList.size(); i++)
+    for (int i = 0; i < timeList.size(); i++)
     {
-        if(chosen[i] == 1)
+        if (chosen[i] == 1)
         {
             chosenOne = i;
             break;
         }
     }
-    if(chosenOne == timeList.size() - 1)
+    if (chosenOne == timeList.size() - 1)
     {
         return;
     }
@@ -1170,30 +1170,30 @@ void MainWindow::on_pushButtonDown_clicked()
 //视频裁剪
 void MainWindow::on_pushButtonCut_clicked()
 {
-    if(chosenNum != 1)
+    if (chosenNum != 1)
     {
         return;
     }
     int chosenOne = -1;
-    for(int i = 0; i < timeList.size(); i++)
+    for (int i = 0; i < timeList.size(); i++)
     {
-        if(chosen[i] == 1)
+        if (chosen[i] == 1)
         {
             chosenOne = i;
             break;
         }
     }
-    if(timeList[chosenOne]->getType() != 0)
+    if (timeList[chosenOne]->getType() != 0)
     {
         return;
     }
     videoCutDialog *dlg = new videoCutDialog(this);
     dlg->showDuration(timeList[chosenOne]->getDuration());
-    if(dlg->exec() == QDialog::Accepted)
+    if (dlg->exec() == QDialog::Accepted)
     {
         int newStart = dlg->getNewStart();
         int newDuration = dlg->getNewDuration();
-        if(newStart + newDuration >= timeList[chosenOne]->getDuration())
+        if (newStart + newDuration >= timeList[chosenOne]->getDuration())
         {
             QMessageBox::information(this, "提示", "设置的时间不合法！");
             return;
@@ -1252,24 +1252,24 @@ void MainWindow::on_pushButtonCut_clicked()
 //视频切分
 void MainWindow::on_pushButtonDivide_clicked()
 {
-    if(chosenNum != 1)
+    if (chosenNum != 1)
     {
         return;
     }
     int chosenOne = -1;
-    for(int i = 0; i < timeList.size(); i++)
+    for (int i = 0; i < timeList.size(); i++)
     {
-        if(chosen[i] == 1)
+        if (chosen[i] == 1)
         {
             chosenOne = i;
             break;
         }
     }
-    if(timeList[chosenOne]->getType() != 0)
+    if (timeList[chosenOne]->getType() != 0)
     {
         return;
     }
-    if(timeList[chosenOne]->getDuration() == 1)
+    if (timeList[chosenOne]->getDuration() == 1)
     {
         QMessageBox::information(this, "提示", "视频时长需要大于1秒！");
         return;
@@ -1277,7 +1277,7 @@ void MainWindow::on_pushButtonDivide_clicked()
     videoDivideDialog *dlg = new videoDivideDialog(this);
     dlg->showDuration(timeList[chosenOne]->getDuration());
 
-    if(dlg->exec() == QDialog::Accepted)
+    if (dlg->exec() == QDialog::Accepted)
     {
         int dur1 = dlg->getTime();
 
@@ -1378,34 +1378,34 @@ void MainWindow::on_pushButtonDivide_clicked()
 //视频合并
 void MainWindow::on_pushButtonConcat_clicked()
 {
-    if(chosenNum <= 1)
+    if (chosenNum <= 1)
     {
         return;
     }
-    if(chosenNum >= 3)
+    if (chosenNum >= 3)
     {
         QMessageBox::information(this, "提示", "仅能将2个视频对象合并！");
         return;
     }
     int chosen1 = -1;
     int chosen2 = -1;
-    for(int i = 0; i < timeList.size(); i++)
+    for (int i = 0; i < timeList.size(); i++)
     {
-        if(chosen[i] == 1)
+        if (chosen[i] == 1)
         {
             chosen1 = i;
             break;
         }
     }
-    for(int i = chosen1 + 1; i < timeList.size(); i++)
+    for (int i = chosen1 + 1; i < timeList.size(); i++)
     {
-        if(chosen[i] == 1)
+        if (chosen[i] == 1)
         {
             chosen2 = i;
             break;
         }
     }
-    if(!(timeList[chosen1]->getType() == 0 && timeList[chosen2]->getType() == 0))
+    if (!(timeList[chosen1]->getType() == 0 && timeList[chosen2]->getType() == 0))
     {
         QMessageBox::information(this, "提示", "仅能将视频进行合并！");
         return;

@@ -35,7 +35,7 @@ MainWindow::~MainWindow()
 
 void MainWindow::changeImage()
 {
-    if(now == 3)
+    if (now == 3)
     {
         now = 0;
     }

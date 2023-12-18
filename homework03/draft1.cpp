@@ -26,7 +26,7 @@ void test_ijk()
 
 int main()
 {
-    while(cin >> N)
+    while (cin >> N)
     {
         test_ijk();
     }

@@ -17,12 +17,12 @@ vector<pair<double, string>> List;
 //获得由这2个数所组合成的8个结果
 vector<pair<double, string>> two(vector<pair<double, string>> &tmp, int i, int j) 
 {
-    if(tmp[i].second != to_string((int)tmp[i].first))
+    if (tmp[i].second != to_string((int)tmp[i].first))
     {
         tmp[i].second = "(" + tmp[i].second + ")";
     }
 
-    if(tmp[j].second != to_string((int)tmp[j].first))
+    if (tmp[j].second != to_string((int)tmp[j].first))
     {
         tmp[j].second = "(" + tmp[j].second + ")";
     }
@@ -63,9 +63,9 @@ vector<pair<double, string>> two(vector<pair<double, string>> &tmp, int i, int j
 //递归
 void calc(vector<pair<double, string>> &List, int n, double sum)
 {
-    if(n == 1) //递归终点
+    if (n == 1) //递归终点
     {
-        if(sum == 24 || sum - eps == 24 || sum + eps == 24 )
+        if (sum == 24 || sum - eps == 24 || sum + eps == 24 )
         {
             exist = 1;
             expression.insert(List[0].second);
@@ -73,9 +73,9 @@ void calc(vector<pair<double, string>> &List, int n, double sum)
         }
         return;
     }
-    for(int i = 0; i < n; i++)
+    for (int i = 0; i < n; i++)
     {
-        for(int j = i + 1; j < n; j++)
+        for (int j = i + 1; j < n; j++)
         {
             auto tmp = List;
             auto comb = two(tmp, i, j);
@@ -83,7 +83,7 @@ void calc(vector<pair<double, string>> &List, int n, double sum)
             tmp.erase(tmp.begin()+j);
             tmp.erase(tmp.begin()+i);
 
-            for(int k = 0; k < 8; k++)
+            for (int k = 0; k < 8; k++)
             {
                 auto tmp2 = tmp;
                 tmp2.insert(tmp2.begin(), comb[k]);
@@ -96,7 +96,7 @@ void calc(vector<pair<double, string>> &List, int n, double sum)
 
 int main()
 {
-    for(int i = 0; i < 4; i++)
+    for (int i = 0; i < 4; i++)
     {
         double x;
         cin >> x;
@@ -105,9 +105,9 @@ int main()
 
     calc(List, 4, 0);
 
-    if(exist)
+    if (exist)
     {
-        for(auto i: expression)
+        for (auto i: expression)
         {
             cout << i << endl;
         }

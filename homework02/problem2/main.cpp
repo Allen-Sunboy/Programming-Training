@@ -17,27 +17,27 @@ void calc(string &tmp)
 {
     int len = tmp.length();
     long long x = List[0];
-    for(int i = 0; i < len; i++)
+    for (int i = 0; i < len; i++)
     {
-        if(tmp[i] == '+')
+        if (tmp[i] == '+')
         {
             x += List[i + 1];
         }
-        if(tmp[i] == '*')
+        if (tmp[i] == '*')
         {
             x *= List[i + 1];
         }
-        if(x >= MinResult)
+        if (x >= MinResult)
         {
             return;
         }
     }
-    if(x == D)
+    if (x == D)
     {
         ope = tmp;
         exist = 1;
     }
-    if(x > D && x < MinResult)
+    if (x > D && x < MinResult)
     {
         MinResult = x;
     }
@@ -47,16 +47,16 @@ void calc(string &tmp)
 // 形成运算符串tmp并调用calc(tmp)，n个数字之间要用到(n-1)个运算符，则存在2的(n-1)次方个不同的运算符串，枚举
 void form(int n)
 {
-    for(long long i = 0; i < (1 << (n - 1)); i++)
+    for (long long i = 0; i < (1 << (n - 1)); i++)
     {
         long long j = i;
         string tmp;
-        while(j >= 1)
+        while (j >= 1)
         {
             tmp.append(j % 2 ? "*" : "+");
             j >>= 1;
         }
-        while(int(tmp.length()) < n - 1)
+        while (int(tmp.length()) < n - 1)
         {
             tmp.append("+");
         }
@@ -70,19 +70,19 @@ int main()
     int n; //数字个数
     cin >> n;
     cin >> D;
-    for(int i = 0; i < n; i++)
+    for (int i = 0; i < n; i++)
     {
         long long x;
         cin >> x;
         List.push_back(x);
     }
     form(n);
-    if(exist)
+    if (exist)
     {
-        for(int i = 0; i < n; i++)
+        for (int i = 0; i < n; i++)
         {
             cout << List[i];
-            if(i < n - 1)
+            if (i < n - 1)
             {      
                 cout << ope[i];
             }
@@ -91,7 +91,7 @@ int main()
     else
     {
         cout << "No" << endl;
-        if(MinResult > D && MinResult < INF)
+        if (MinResult > D && MinResult < INF)
         {
             cout << MinResult << endl;
         }

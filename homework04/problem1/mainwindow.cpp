@@ -61,7 +61,7 @@ MainWindow::~MainWindow()
 
 void MainWindow::AddNum(int i)
 {
-    if(i == -1)
+    if (i == -1)
     {
         str.clear();
     }

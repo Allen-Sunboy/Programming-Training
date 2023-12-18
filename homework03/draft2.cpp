@@ -12,7 +12,7 @@ int N;
 
 int main()
 {
-    while(cin >> N)
+    while (cin >> N)
     {
         cout << "ijk: ";
         clock_t start1 = clock();

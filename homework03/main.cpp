@@ -98,7 +98,7 @@ void test_kji()
 
 int main()
 {
-    while(cin >> N)
+    while (cin >> N)
     {
         cout << "N = " << N << endl;
         cout << "---test start---" << endl;

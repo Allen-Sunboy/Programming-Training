@@ -22,16 +22,16 @@ bool exist;
 void calc(vector<long long> &List, string &str)
 {
     long long List0 = List[0];
-    if(List.size() == 1)  // 递归终点，List只剩一个数，即List[0]
+    if (List.size() == 1)  // 递归终点，List只剩一个数，即List[0]
     {
-        if(List0 > D)
+        if (List0 > D)
         {
-            if(List0 < MinResult)
+            if (List0 < MinResult)
             {
                 MinResult = List0;
             }
         }
-        if(List0 == D) //如果算得结果是D
+        if (List0 == D) //如果算得结果是D
         {
             ope = str;
             exist = 1;
@@ -39,7 +39,7 @@ void calc(vector<long long> &List, string &str)
         return;
     }
 
-    if(List0 > MinResult) //特判，如果算得结果已经超过大于D的最小值，则不再递归，提前返回，这样可减少递归消耗和运行时长
+    if (List0 > MinResult) //特判，如果算得结果已经超过大于D的最小值，则不再递归，提前返回，这样可减少递归消耗和运行时长
     {
         return;
     }
@@ -74,7 +74,7 @@ int main()
     int n;
     cin >> n;
     cin >> D;
-    for(int i = 0; i < n; i++)
+    for (int i = 0; i < n; i++)
     {
         long long in;
         cin >> in;
@@ -93,12 +93,12 @@ int main()
     auto duration = (finish - start) / CLOCKS_PER_SEC;
     cout << duration << endl;
     
-    if(exist)
+    if (exist)
     {
-        for(int i = 0; i < n; i++)
+        for (int i = 0; i < n; i++)
         {
             cout << List[i];
-            if(i < n - 1)
+            if (i < n - 1)
             {      
                 cout << ope[i];
             }
@@ -107,7 +107,7 @@ int main()
     else
     {
         cout << "No" << endl;
-        if(MinResult > D && MinResult != MAXN)
+        if (MinResult > D && MinResult != MAXN)
         {
             cout << MinResult << endl;
         }
