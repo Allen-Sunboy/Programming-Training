@@ -2,17 +2,12 @@
 #include "Member.h"
 #include <map>
 
-class MemberList
-{
+class MemberList {
     private:
-    int num;
-    std::map<std::string, int> list;
+        int num;
+        std::map<std::string, int> list;
 
     public:
-    MemberList(Member *List, int Num);
-    int &operator[](std::string name)
-    {
-        return list[name];
-    }
-
+        MemberList(Member *List, int Num);
+        int &operator[](std::string name) { return list[name]; }
 };
